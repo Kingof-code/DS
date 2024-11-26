@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node {
+    int data;
+    struct node* next;
+} Node;
+
+Node* head = NULL;
+
+void insertAtEnd(int val) {
+    Node* temp = malloc(sizeof(Node));
+    temp->data = val, temp->next = NULL;
+    if (!head) head = temp;
+    else {
+        Node* ptr = head;
+        while (ptr->next) ptr = ptr->next;
+        ptr->next = temp;
+    }
+}
+
+void deleteNode(int val) {
+    Node *temp = head, *prev = NULL;
+    while (temp && temp->data != val) prev = temp, temp = temp->next;
+    if (!temp) return;
+    if (!prev) head = temp->next;
+    else prev->next = temp->next;
+    free(temp);
+}
+
+void display() {
+    for (Node* temp = head; temp; temp = temp->next) printf("%d -> ", temp->data);
+    printf("NULL\n");
+}
+
+int main() {
+    insertAtEnd(10);
+    insertAtEnd(20);
+    display();
+    deleteNode(10);
+    display();
+    return 0;
+}
