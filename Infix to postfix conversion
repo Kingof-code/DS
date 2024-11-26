@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <ctype.h>
+
+char stack[50];
+int top = -1;
+
+void push(char c) { stack[++top] = c; }
+char pop() { return stack[top--]; }
+int precedence(char c) { return (c == '+' || c == '-') ? 1 : 2; }
+
+int main() {
+    char infix[50], postfix[50], ch;
+    int k = 0;
+    printf("Enter infix expression: ");
+    scanf("%s", infix);
+    push('(');
+    for (int i = 0; (ch = infix[i]) != '\0'; i++) {
+        if (isalnum(ch)) postfix[k++] = ch;
+        else if (ch == '(') push(ch);
+        else if (ch == ')') while (stack[top] != '(') postfix[k++] = pop();
+        else {
+            while (precedence(stack[top]) >= precedence(ch)) postfix[k++] = pop();
+            push(ch);
+        }
+    }
+    postfix[k] = '\0';
+    printf("Postfix: %s\n", postfix);
+    return 0;
+}
