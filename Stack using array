@@ -1,0 +1,32 @@
+#include <stdio.h>
+#define SIZE 5
+
+struct stack {
+    int s[SIZE], top;
+} st = {.top = -1};
+
+int isFull() { return st.top == SIZE - 1; }
+int isEmpty() { return st.top == -1; }
+
+void push(int val) { st.s[++st.top] = val; }
+int pop() { return st.s[st.top--]; }
+void display() {
+    for (int i = st.top; i >= 0; i--) printf("%d\n", st.s[i]);
+}
+
+int main() {
+    int ch, val;
+    while (1) {
+        printf("1.Push 2.Pop 3.Display 4.Exit: ");
+        scanf("%d", &ch);
+        if (ch == 1) {
+            if (isFull()) printf("Full\n");
+            else scanf("%d", &val), push(val);
+        } else if (ch == 2) {
+            if (isEmpty()) printf("Empty\n");
+            else printf("Popped: %d\n", pop());
+        } else if (ch == 3) display();
+        else break;
+    }
+    return 0;
+}
