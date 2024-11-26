@@ -1,0 +1,21 @@
+#include <stdio.h>
+#define MAX 10
+
+int heap[MAX], n = 0;
+
+void insert(int val) {
+    int i = n++;
+    while (i > 0 && val > heap[(i - 1) / 2]) heap[i] = heap[(i - 1) / 2], i = (i - 1) / 2;
+    heap[i] = val;
+}
+
+void display() {
+    for (int i = 0; i < n; i++) printf("%d ", heap[i]);
+    printf("\n");
+}
+
+int main() {
+    insert(10), insert(20), insert(5);
+    display();
+    return 0;
+}
